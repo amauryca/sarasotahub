@@ -1,0 +1,19 @@
+{
+  "name": "sarasota-hub-backend",
+  "version": "1.0.0",
+  "description": "Backend server for Sarasota Community Resource Hub",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["sarasota", "community", "resources"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "resend": "^3.0.0",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  }
+}

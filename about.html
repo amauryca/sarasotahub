@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>About - Sarasota Community Resource Hub</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body style="margin: 0; padding: 0;">
+  <!-- Header & Navigation -->
+  <header>
+    <div class="header-content">
+      <a href="index.html" class="logo-section">
+        <img src="assets/favicon.ico" alt="Sarasota">
+        <span>Sarasota Hub</span>
+      </a>
+      <nav id="main-nav">
+        <a href="index.html" class="nav-link" data-page="home">Home</a>
+        <a href="resources.html" class="nav-link" data-page="resources">Resources</a>
+        <a href="map.html" class="nav-link" data-page="map">Map</a>
+        <a href="calendar.html" class="nav-link" data-page="calendar">Calendar</a>
+        <a href="submit.html" class="nav-link" data-page="submit">Submit</a>
+        <a href="about.html" class="nav-link active" data-page="about">About</a>
+      </nav>
+      <button id="hamburger" class="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ABOUT PAGE -->
+  <main style="padding-top: 2rem; animation: pageEnter 0.6s ease;">
+    <div class="container">
+      <div style="animation: fadeInDown 0.6s ease;">
+        <h1>About Sarasota Community Hub</h1>
+      </div>
+      
+      <div style="background-color: var(--light-bg); padding: 2rem; border-radius: 1rem; margin: 2rem 0; animation: fadeInUp 0.6s ease 0.2s both; border: 1px solid rgba(255, 140, 0, 0.1);">
+        <h2>Our Mission</h2>
+        <p style="font-size: 1.1rem;">The Sarasota Community Resource Hub is dedicated to connecting residents with essential services, programs, and opportunities available in our community. We believe that access to information about community resources is crucial for building a strong, connected, and thriving Sarasota.</p>
+        <p style="font-size: 1.1rem;">Our goal is to make it easy for residents to find the help they need, when they need it. Whether you're looking for healthcare, job training, food assistance, or community programs, our hub provides a comprehensive directory of local resources.</p>
+      </div>
+
+      <!-- Stats -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
+        <div style="background: white; padding: 2rem; border-radius: 1rem; text-align: center; box-shadow: var(--shadow);">
+          <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color);" id="resource-count">200+</div>
+          <div style="color: var(--text-light);">Resources</div>
+        </div>
+        <div style="background: white; padding: 2rem; border-radius: 1rem; text-align: center; box-shadow: var(--shadow);">
+          <div style="font-size: 2.5rem; font-weight: 700; color: var(--secondary-color);">14</div>
+          <div style="color: var(--text-light);">Categories</div>
+        </div>
+        <div style="background: white; padding: 2rem; border-radius: 1rem; text-align: center; box-shadow: var(--shadow);">
+          <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-color);">40+</div>
+          <div style="color: var(--text-light);">Events Yearly</div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
+        <div style="animation: fadeInUp 0.6s ease 0.2s both; background: white; padding: 2rem; border-radius: 1rem; border: 1px solid rgba(255, 140, 0, 0.1);">
+          <h3 style="color: var(--primary-color);">📚 Comprehensive</h3>
+          <p>Our hub includes resources across multiple categories including healthcare, education, housing, employment, recreation, and more.</p>
+        </div>
+
+        <div style="animation: fadeInUp 0.6s ease 0.3s both; background: white; padding: 2rem; border-radius: 1rem; border: 1px solid rgba(255, 140, 0, 0.1);">
+          <h3 style="color: var(--secondary-color);">🔄 Up-to-Date</h3>
+          <p>We continuously work to keep our resource database current. The community can submit updates and new resources at any time.</p>
+        </div>
+
+        <div style="animation: fadeInUp 0.6s ease 0.4s both; background: white; padding: 2rem; border-radius: 1rem; border: 1px solid rgba(255, 140, 0, 0.1);">
+          <h3 style="color: var(--accent-color);">🗺️ Accessible</h3>
+          <p>With interactive maps, search functionality, and mobile-friendly design, finding resources is easy and convenient.</p>
+        </div>
+      </div>
+
+      <!-- Resources by Category -->
+      <h2 style="margin-top: 3rem;">Resources by Category</h2>
+      <div id="category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 2rem 0;">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Get Involved -->
+      <div style="background-color: var(--light-bg); padding: 2rem; border-radius: 1rem; margin: 3rem 0; animation: fadeInUp 0.6s ease 0.3s both; border: 1px solid rgba(255, 140, 0, 0.1);">
+        <h2>Get Involved</h2>
+        <p style="margin-bottom: 1rem;">Know of a resource that should be in our hub? We'd love to hear from you!</p>
+        <a href="submit.html" class="btn btn-primary">Submit a Resource</a>
+      </div>
+
+      <!-- Contact Info -->
+      <div style="background: white; padding: 2rem; border-radius: 1rem; margin: 2rem 0; box-shadow: var(--shadow);">
+        <h2>Contact Us</h2>
+        <p><strong>Email:</strong> <a href="mailto:sarasotahub@gmail.com">sarasotahub@gmail.com</a></p>
+        <p>Have questions or feedback? Reach out to us and we'll get back to you as soon as possible.</p>
+      </div>
+
+      <!-- Footer bottom -->
+      <div style="text-align: center; padding: 2rem 0; border-top: 1px solid var(--border-color); margin-top: 3rem; animation: fadeIn 0.6s ease 0.4s both;">
+        <p style="color: var(--text-light);">© 2024 Sarasota Community Resource Hub. Created to serve the Sarasota Community.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>© 2024 Sarasota Community Resource Hub</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/resources-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

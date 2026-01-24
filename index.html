@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sarasota Community Resource Hub</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+  <!-- Header & Navigation -->
+  <header>
+    <div class="header-content">
+      <a href="index.html" class="logo-section">
+        <img src="assets/favicon.ico" alt="Sarasota">
+        <span>Sarasota Hub</span>
+      </a>
+      <nav id="main-nav">
+        <a href="index.html" class="nav-link active" data-page="home">Home</a>
+        <a href="resources.html" class="nav-link" data-page="resources">Resources</a>
+        <a href="map.html" class="nav-link" data-page="map">Map</a>
+        <a href="calendar.html" class="nav-link" data-page="calendar">Calendar</a>
+        <a href="submit.html" class="nav-link" data-page="submit">Submit</a>
+        <a href="about.html" class="nav-link" data-page="about">About</a>
+      </nav>
+      <button id="hamburger" class="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HOME PAGE -->
+  <main id="home-page">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Welcome to Sarasota Community Hub</h1>
+        <p>Your gateway to local resources, services, and opportunities in Sarasota</p>
+        <div class="hero-buttons">
+          <a href="resources.html" class="btn btn-outline">Explore Resources</a>
+          <a href="submit.html" class="btn btn-outline">Submit a Resource</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Navigation Section -->
+    <section class="featured-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Explore Sarasota Resources</h2>
+          <p>Choose how you'd like to discover community resources</p>
+        </div>
+        <div class="featured-grid">
+          <!-- Resources Page Link -->
+          <a href="resources.html" class="resource-card fade-in-on-scroll" style="text-decoration: none;">
+            <div class="resource-card-header">📋</div>
+            <div class="resource-card-body">
+              <h3>Browse All Resources</h3>
+              <p>Search and filter through our complete directory of 200+ community resources. Find exactly what you need.</p>
+              <div class="resource-card-footer">
+                <span class="btn btn-small btn-primary">View All Resources →</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Map Page Link -->
+          <a href="map.html" class="resource-card fade-in-on-scroll" style="text-decoration: none;">
+            <div class="resource-card-header">🗺️</div>
+            <div class="resource-card-body">
+              <h3>Interactive Map</h3>
+              <p>See resources locations on an interactive map. Filter by category and find services near you.</p>
+              <div class="resource-card-footer">
+                <span class="btn btn-small btn-primary">View Map →</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Calendar Page Link -->
+          <a href="calendar.html" class="resource-card fade-in-on-scroll" style="text-decoration: none;">
+            <div class="resource-card-header">📅</div>
+            <div class="resource-card-body">
+              <h3>Community Events</h3>
+              <p>Discover upcoming events and programs happening in Sarasota. Stay updated on local happenings.</p>
+              <div class="resource-card-footer">
+                <span class="btn btn-small btn-primary">View Calendar →</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Resources Section -->
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Featured Resources</h2>
+          <p>Discover some of our most important community resources</p>
+        </div>
+        <div class="featured-grid" id="featured-grid">
+          <!-- Featured resources populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="featured-section">
+      <div class="container">
+        <div style="text-align: center; animation: fadeInUp 0.8s ease;">
+          <h2 style="color: var(--primary-color);">Know a Resource We're Missing?</h2>
+          <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem;">Help us build a comprehensive community resource database.</p>
+          <a href="submit.html" class="btn btn-primary btn-large" style="padding: 1rem 2rem; font-size: 1.1rem;">Submit a Resource</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>About Sarasota Hub</h4>
+          <p>A comprehensive directory of community resources in Sarasota, Florida, designed to connect residents with essential services.</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="resources.html">Browse Resources</a></li>
+            <li><a href="map.html">View Map</a></li>
+            <li><a href="calendar.html">Events Calendar</a></li>
+            <li><a href="submit.html">Submit Resource</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Categories</h4>
+          <ul>
+            <li><a href="resources.html?category=Libraries">Libraries</a></li>
+            <li><a href="resources.html?category=Healthcare">Healthcare</a></li>
+            <li><a href="resources.html?category=Parks">Parks</a></li>
+            <li><a href="resources.html?category=Job Services">Job Services</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>Email: <a href="mailto:sarasotahub@gmail.com">sarasotahub@gmail.com</a></p>
+          <p>Help us improve by sharing feedback or suggesting new resources!</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2024 Sarasota Community Resource Hub. Created to serve the Sarasota Community.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/resources-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

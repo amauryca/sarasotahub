@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Resource - Sarasota Community Resource Hub</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(255, 140, 0, 0.05);
+    }
+
+    .form-section {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .form-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .form-section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group label .required {
+      color: #e74c3c;
+      margin-left: 0.25rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border-color);
+      border-radius: 0.5rem;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
+    }
+
+    .form-group input.error,
+    .form-group select.error,
+    .form-group textarea.error {
+      border-color: #e74c3c;
+      background-color: #fadbd8;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .error-message {
+      font-size: 0.85rem;
+      color: #e74c3c;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .form-helper {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 0.25rem;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color), #f06292);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--border-color);
+      color: var(--text-dark);
+    }
+
+    .btn-secondary:hover {
+      background: #ddd;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .status-message {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+      display: none;
+      font-weight: 500;
+      animation: slideDown 0.3s ease;
+      border-left: 4px solid;
+    }
+
+    .status-message.show {
+      display: block;
+    }
+
+    .status-message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border-left-color: #28a745;
+    }
+
+    .status-message.error {
+      background-color: #fce4ec;
+      color: #c2185b;
+      border-left-color: #e91e63;
+    }
+
+    .status-message.loading {
+      background-color: #d1ecf1;
+      color: #0c5460;
+      border-left-color: #17a2b8;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 1.5rem;
+      }
+
+      .form-buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">🌴 Sarasota Hub</div>
+        <button id="hamburger" class="hamburger" onclick="toggleMobileMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav id="main-nav" class="nav">
+          <a href="index.html">Home</a>
+          <a href="resources.html">Resources</a>
+          <a href="map.html">Map</a>
+          <a href="calendar.html">Events</a>
+          <a href="submit.html" class="active">Submit</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div style="margin-top: 2rem; margin-bottom: 2rem;">
+        <h1>Submit a Resource</h1>
+        <p style="color: var(--text-light); font-size: 1.05rem;">Help us grow the community hub by submitting a resource you know about.</p>
+      </div>
+
+      <div id="statusMessage" class="status-message"></div>
+
+      <div class="form-container">
+        <form id="resourceForm" novalidate>
+          <!-- Resource Information Section -->
+          <div class="form-section">
+            <h2 class="form-section-title">📍 Resource Information</h2>
+
+            <div class="form-group">
+              <label for="resourceName">Resource Name <span class="required">*</span></label>
+              <input type="text" id="resourceName" name="resourceName" placeholder="e.g., Sarasota Food Bank" required>
+              <div class="error-message" id="error-resourceName">Resource name is required</div>
+            </div>
+
+            <div class="form-group">
+              <label for="resourceCategory">Category <span class="required">*</span></label>
+              <select id="resourceCategory" name="resourceCategory" required>
+                <option value="">Select a category</option>
+                <option value="food-assistance">🍔 Food Assistance</option>
+                <option value="healthcare">🏥 Healthcare</option>
+                <option value="housing">🏠 Housing</option>
+                <option value="education">📚 Education</option>
+                <option value="employment">💼 Employment</option>
+                <option value="mental-health">🧠 Mental Health</option>
+                <option value="seniors">👴 Seniors</option>
+                <option value="youth">👶 Youth/Families</option>
+                <option value="disability">♿ Disability Services</option>
+                <option value="legal">⚖️ Legal Services</option>
+                <option value="transportation">🚗 Transportation</option>
+                <option value="beaches">🏖️ Beaches</option>
+                <option value="places-to-go">🗺️ Places to Go</option>
+                <option value="things-to-do">🎉 Things to Do</option>
+                <option value="other">📌 Other</option>
+              </select>
+              <div class="error-message" id="error-resourceCategory">Please select a category</div>
+            </div>
+
+            <div class="form-group">
+              <label for="resourceAddress">Address <span class="required">*</span></label>
+              <input type="text" id="resourceAddress" name="resourceAddress" placeholder="123 Main St, Sarasota, FL 34236" required>
+              <div class="error-message" id="error-resourceAddress">Address is required</div>
+            </div>
+
+            <div class="form-group">
+              <label for="resourcePhone">Phone Number</label>
+              <input type="tel" id="resourcePhone" name="resourcePhone" placeholder="(941) 555-5678">
+              <div class="error-message" id="error-resourcePhone">Please enter a valid phone number</div>
+            </div>
+
+            <div class="form-group">
+              <label for="resourceEmail">Email</label>
+              <input type="email" id="resourceEmail" name="resourceEmail" placeholder="contact@example.com">
+              <div class="error-message" id="error-resourceEmail">Please enter a valid email</div>
+            </div>
+
+            <div class="form-group">
+              <label for="resourceWebsite">Website</label>
+              <input type="url" id="resourceWebsite" name="resourceWebsite" placeholder="https://example.com">
+              <div class="error-message" id="error-resourceWebsite">Please enter a valid URL</div>
+            </div>
+
+            <div class="form-group">
+              <label for="resourceHours">Hours of Operation</label>
+              <input type="text" id="resourceHours" name="resourceHours" placeholder="e.g., Mon-Fri 9am-5pm">
+            </div>
+
+            <div class="form-group">
+              <label for="resourceDescription">Description <span class="required">*</span></label>
+              <textarea id="resourceDescription" name="resourceDescription" placeholder="Tell us about this resource and how it helps the community" required></textarea>
+              <div class="error-message" id="error-resourceDescription">Description is required</div>
+            </div>
+
+            <div class="form-group">
+              <label for="resourceServices">Services Offered</label>
+              <textarea id="resourceServices" name="resourceServices" placeholder="List services separated by commas"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="resourceTags">Tags</label>
+              <input type="text" id="resourceTags" name="resourceTags" placeholder="e.g., free, nonprofit, donation-based">
+              <p class="form-helper">Comma-separated keywords that help people find this resource</p>
+            </div>
+          </div>
+
+          <!-- Submitter Information Section -->
+          <div class="form-section">
+            <h2 class="form-section-title">👤 Your Information</h2>
+
+            <div class="form-group">
+              <label for="submitterName">Your Name <span class="required">*</span></label>
+              <input type="text" id="submitterName" name="submitterName" placeholder="John Doe" required>
+              <div class="error-message" id="error-submitterName">Your name is required</div>
+            </div>
+
+            <div class="form-group">
+              <label for="submitterEmail">Your Email <span class="required">*</span></label>
+              <input type="email" id="submitterEmail" name="submitterEmail" placeholder="you@example.com" required>
+              <div class="error-message" id="error-submitterEmail">Valid email is required</div>
+            </div>
+
+            <div class="form-group">
+              <label for="submitterPhone">Your Phone</label>
+              <input type="tel" id="submitterPhone" name="submitterPhone" placeholder="(941) 555-5678">
+            </div>
+
+            <div class="form-group">
+              <label for="submitterRelation">Your Relationship to Resource</label>
+              <select id="submitterRelation" name="submitterRelation">
+                <option value="">Select one</option>
+                <option value="employee">I work there</option>
+                <option value="user">I've used their services</option>
+                <option value="community">Community member</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Form Buttons -->
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-primary" id="submitBtn">Submit Resource</button>
+            <button type="reset" class="btn btn-secondary">Clear Form</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>About Sarasota Hub</h4>
+          <p>A comprehensive directory of community resources in Sarasota, Florida.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><a href="map.html">Map</a></li>
+            <li><a href="submit.html">Submit</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>Email: <a href="mailto:sarasotahub@gmail.com">sarasotahub@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 Sarasota Community Resource Hub</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const RESEND_API_KEY = 're_cKRf4sGU_F9vEyBzKWEadHp7uQ5Lej46M';
+    const ADMIN_EMAIL = 'sarasotahub@gmail.com';
+
+    function toggleMobileMenu() {
+      const hamburger = document.getElementById('hamburger');
+      const nav = document.getElementById('main-nav');
+      if (hamburger) hamburger.classList.toggle('active');
+      if (nav) nav.classList.toggle('active');
+    }
+
+    function showStatus(message, type) {
+      const statusEl = document.getElementById('statusMessage');
+      statusEl.textContent = message;
+      statusEl.className = `status-message show ${type}`;
+      statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function clearErrors() {
+      const errorMessages = document.querySelectorAll('.error-message');
+      errorMessages.forEach(el => el.classList.remove('show'));
+      
+      const inputs = document.querySelectorAll('.form-group input, .form-group select, .form-group textarea');
+      inputs.forEach(el => el.classList.remove('error'));
+    }
+
+    function validateForm(formData) {
+      clearErrors();
+      let isValid = true;
+      const errors = [];
+
+      // Required fields validation
+      if (!formData.name.trim()) {
+        showFieldError('resourceName');
+        errors.push('Resource name is required');
+        isValid = false;
+      }
+
+      if (!formData.category) {
+        showFieldError('resourceCategory');
+        errors.push('Please select a category');
+        isValid = false;
+      }
+
+      if (!formData.address.trim()) {
+        showFieldError('resourceAddress');
+        errors.push('Address is required');
+        isValid = false;
+      }
+
+      if (!formData.description.trim()) {
+        showFieldError('resourceDescription');
+        errors.push('Description is required');
+        isValid = false;
+      }
+
+      if (!formData.submitterName.trim()) {
+        showFieldError('submitterName');
+        errors.push('Your name is required');
+        isValid = false;
+      }
+
+      if (!formData.submitterEmail.trim()) {
+        showFieldError('submitterEmail');
+        errors.push('Your email is required');
+        isValid = false;
+      }
+
+      // Email format validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (formData.submitterEmail.trim() && !emailRegex.test(formData.submitterEmail.trim())) {
+        showFieldError('submitterEmail', 'Please enter a valid email address');
+        errors.push('Invalid email format');
+        isValid = false;
+      }
+
+      if (formData.email.trim() && !emailRegex.test(formData.email.trim())) {
+        showFieldError('resourceEmail', 'Please enter a valid email address');
+        errors.push('Invalid resource email format');
+        isValid = false;
+      }
+
+      // Phone validation (if provided)
+      if (formData.phone.trim()) {
+        const phoneRegex = /^[\d\s\-\(\)\+]+$/;
+        if (!phoneRegex.test(formData.phone.trim())) {
+          showFieldError('resourcePhone', 'Please enter a valid phone number');
+          errors.push('Invalid phone format');
+          isValid = false;
+        }
+      }
+
+      // URL validation (if provided)
+      if (formData.website.trim()) {
+        try {
+          new URL(formData.website.trim());
+        } catch {
+          showFieldError('resourceWebsite', 'Please enter a valid URL');
+          errors.push('Invalid URL format');
+          isValid = false;
+        }
+      }
+
+      if (!isValid) {
+        const errorList = errors.join(', ');
+        showStatus(`❌ Please fix the following errors: ${errorList}`, 'error');
+      }
+
+      return isValid;
+    }
+
+    function showFieldError(fieldId, customMessage = null) {
+      const field = document.getElementById(fieldId);
+      const errorEl = document.getElementById(`error-${fieldId}`);
+      
+      if (field) field.classList.add('error');
+      if (errorEl) {
+        if (customMessage) {
+          errorEl.textContent = customMessage;
+        }
+        errorEl.classList.add('show');
+      }
+    }
+
+    function buildEmailHtml(formData) {
+      return `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+          <div style="background: linear-gradient(135deg, #e91e63, #f06292); color: white; padding: 30px; border-radius: 8px 8px 0 0; text-align: center;">
+            <h1 style="margin: 0; font-size: 28px;">📋 New Resource Submission</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.95; font-size: 16px;">Sarasota Community Hub</p>
+          </div>
+          
+          <div style="padding: 25px; background: #f9f9f9; border-bottom: 1px solid #eee;">
+            <h3 style="color: #e91e63; border-bottom: 3px solid #e91e63; padding-bottom: 12px; margin-top: 0; font-size: 18px;">📍 Resource Information</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Name:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(formData.name)}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Category:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(formData.category)}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Address:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(formData.address)}</td>
+              </tr>
+              ${formData.phone ? `<tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Phone:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(formData.phone)}</td>
+              </tr>` : ''}
+              ${formData.email ? `<tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Email:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><a href="mailto:${escapeHtml(formData.email)}" style="color: #e91e63;">${escapeHtml(formData.email)}</a></td>
+              </tr>` : ''}
+              ${formData.website ? `<tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Website:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><a href="${escapeHtml(formData.website)}" style="color: #e91e63;" target="_blank">${escapeHtml(formData.website)}</a></td>
+              </tr>` : ''}
+              ${formData.hours ? `<tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Hours:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(formData.hours)}</td>
+              </tr>` : ''}
+              <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; vertical-align: top;"><strong>Description:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(formData.description).replace(/\n/g, '<br>')}</td>
+              </tr>
+              ${formData.services ? `<tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; vertical-align: top;"><strong>Services:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(formData.services).replace(/\n/g, '<br>')}</td>
+              </tr>` : ''}
+              ${formData.tags ? `<tr>
+                <td style="padding: 8px 0;"><strong>Tags:</strong></td>
+                <td style="padding: 8px 0;">${escapeHtml(formData.tags)}</td>
+              </tr>` : ''}
+            </table>
+          </div>
+          
+          <div style="padding: 25px; background: white;">
+            <h3 style="color: #e91e63; border-bottom: 3px solid #e91e63; padding-bottom: 12px; margin-top: 0; font-size: 18px;">👤 Submitter Information</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Name:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(formData.submitterName)}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Email:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><a href="mailto:${escapeHtml(formData.submitterEmail)}" style="color: #e91e63;">${escapeHtml(formData.submitterEmail)}</a></td>
+              </tr>
+              ${formData.submitterPhone ? `<tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Phone:</strong></td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(formData.submitterPhone)}</td>
+              </tr>` : ''}
+              ${formData.submitterRelation ? `<tr>
+                <td style="padding: 8px 0;"><strong>Relationship:</strong></td>
+                <td style="padding: 8px 0;">${escapeHtml(formData.submitterRelation)}</td>
+              </tr>` : ''}
+            </table>
+          </div>
+          
+          <div style="padding: 15px; background: #fff3e0; text-align: center; border-radius: 0 0 8px 8px; font-size: 12px; color: #666;">
+            <p style="margin: 0;">This resource will be reviewed and added to the Sarasota Community Hub within 1-2 business days.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+
+      // Get all form values
+      const formData = {
+        name: document.getElementById('resourceName').value.trim(),
+        category: document.getElementById('resourceCategory').value,
+        address: document.getElementById('resourceAddress').value.trim(),
+        phone: document.getElementById('resourcePhone').value.trim(),
+        website: document.getElementById('resourceWebsite').value.trim(),
+        email: document.getElementById('resourceEmail').value.trim(),
+        hours: document.getElementById('resourceHours').value.trim(),
+        description: document.getElementById('resourceDescription').value.trim(),
+        services: document.getElementById('resourceServices').value.trim(),
+        tags: document.getElementById('resourceTags').value.trim(),
+        submitterName: document.getElementById('submitterName').value.trim(),
+        submitterEmail: document.getElementById('submitterEmail').value.trim(),
+        submitterPhone: document.getElementById('submitterPhone').value.trim(),
+        submitterRelation: document.getElementById('submitterRelation').value.trim()
+      };
+
+      // Validate form
+      if (!validateForm(formData)) {
+        return;
+      }
+
+      // Disable submit button
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+
+      showStatus('📤 Sending your submission...', 'loading');
+
+      // Send email via Resend API
+      fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${RESEND_API_KEY}`
+        },
+        body: JSON.stringify({
+          from: 'Sarasota Hub <onboarding@resend.dev>',
+          to: ADMIN_EMAIL,
+          subject: `📋 New Resource: ${formData.name}`,
+          html: buildEmailHtml(formData),
+          reply_to: formData.submitterEmail
+        })
+      })
+      .then(response => {
+        console.log('Response status:', response.status);
+        return response.json().catch(() => ({ id: 'fallback' }));
+      })
+      .then(data => {
+        console.log('Resend API Response:', data);
+        
+        if (data.id) {
+          showStatus('✅ Thank you! Your resource has been submitted successfully. We will review it and add it to the hub within 1-2 business days.', 'success');
+          document.getElementById('resourceForm').reset();
+          submitBtn.disabled = false;
+          
+          setTimeout(() => {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.classList.remove('show');
+          }, 5000);
+        } else if (data.message) {
+          showStatus(`❌ Submission Error: ${data.message}`, 'error');
+          submitBtn.disabled = false;
+        } else {
+          showStatus('✅ Your submission has been received! We will review it shortly.', 'success');
+          document.getElementById('resourceForm').reset();
+          submitBtn.disabled = false;
+        }
+      })
+      .catch(error => {
+        console.error('Form submission error:', error);
+        showStatus('❌ Error submitting form. Please try again or email sarasotahub@gmail.com directly.', 'error');
+        submitBtn.disabled = false;
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('resourceForm');
+      if (form) {
+        form.addEventListener('submit', handleSubmit);
+
+        // Real-time validation on blur
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+          input.addEventListener('blur', function() {
+            if (this.classList.contains('error') && this.value.trim()) {
+              this.classList.remove('error');
+              const errorEl = document.getElementById(`error-${this.id}`);
+              if (errorEl) errorEl.classList.remove('show');
+            }
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+

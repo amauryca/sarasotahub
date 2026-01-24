@@ -390,7 +390,7 @@
     const ADMIN_EMAIL = 'sarasotahub@gmail.com';
     
     // Initialize EmailJS (Public Key - safe to expose)
-    emailjs.init('uXBRpHaLEeNdKVm5W');
+    emailjs.init('3u8_LrWUqrh1EgNaW');
 
     function toggleMobileMenu() {
       const hamburger = document.getElementById('hamburger');
@@ -656,18 +656,13 @@
         console.log('EmailJS Response:', response);
         submitBtn.disabled = false;
         
-        if (response.status === 200) {
-          showStatus('✅ Thank you! Your resource has been submitted successfully. We will review it and add it to the hub within 1-2 business days.', 'success');
-          document.getElementById('resourceForm').reset();
-          
-          setTimeout(() => {
-            const statusEl = document.getElementById('statusMessage');
-            statusEl.classList.remove('show');
-          }, 5000);
-        } else {
-          showStatus('✅ Your submission has been received! We will review it shortly.', 'success');
-          document.getElementById('resourceForm').reset();
-        }
+        showStatus('✅ Thank you! Your resource has been submitted successfully. We will review it and add it to the hub within 1-2 business days.', 'success');
+        document.getElementById('resourceForm').reset();
+        
+        setTimeout(() => {
+          const statusEl = document.getElementById('statusMessage');
+          statusEl.classList.remove('show');
+        }, 5000);
       })
       .catch(error => {
         console.error('Form submission error:', error);

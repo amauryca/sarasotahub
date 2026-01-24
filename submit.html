@@ -631,29 +631,22 @@
 
       showStatus('📤 Sending your submission...', 'loading');
 
-      // Send email via Resend API
-      fetch('https://api.resend.com/emails', {
+      // Send to local backend server
+      fetch('http://localhost:3001/api/submit', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${RESEND_API_KEY}`
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          from: 'Sarasota Hub <onboarding@resend.dev>',
-          to: ADMIN_EMAIL,
-          subject: `📋 New Resource: ${formData.name}`,
-          html: buildEmailHtml(formData),
-          reply_to: formData.submitterEmail
-        })
+        body: JSON.stringify(formData)
       })
       .then(response => {
         console.log('Response status:', response.status);
-        return response.json().catch(() => ({ id: 'fallback' }));
+        return response.json().catch(() => ({ error: 'Failed to parse response' }));
       })
       .then(data => {
-        console.log('Resend API Response:', data);
+        console.log('API Response:', data);
         
-        if (data.id) {
+        if (data.id || data.success) {
           showStatus('✅ Thank you! Your resource has been submitted successfully. We will review it and add it to the hub within 1-2 business days.', 'success');
           document.getElementById('resourceForm').reset();
           submitBtn.disabled = false;
@@ -662,8 +655,8 @@
             const statusEl = document.getElementById('statusMessage');
             statusEl.classList.remove('show');
           }, 5000);
-        } else if (data.message) {
-          showStatus(`❌ Submission Error: ${data.message}`, 'error');
+        } else if (data.error || data.message) {
+          showStatus(`❌ Submission Error: ${data.message || data.error}`, 'error');
           submitBtn.disabled = false;
         } else {
           showStatus('✅ Your submission has been received! We will review it shortly.', 'success');
@@ -699,3 +692,4 @@
   </script>
 </body>
 </html>
+

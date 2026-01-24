@@ -385,9 +385,12 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/build/index.min.js"></script>
   <script>
-    const RESEND_API_KEY = 're_8Fn58NsH_EcjjVMp32j3VDiPNEC4ZwL5f';
     const ADMIN_EMAIL = 'sarasotahub@gmail.com';
+    
+    // Initialize EmailJS (Public Key - safe to expose)
+    emailjs.init('uXBRpHaLEeNdKVm5W');
 
     function toggleMobileMenu() {
       const hamburger = document.getElementById('hamburger');
@@ -631,37 +634,39 @@
 
       showStatus('📤 Sending your submission...', 'loading');
 
-      // Send to local backend server
-      fetch('http://localhost:3001/api/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+      // Send via EmailJS (completely free, no backend needed!)
+      emailjs.send('service_1qniwxh', 'template_l3vfvjj', {
+        to_email: ADMIN_EMAIL,
+        from_email: formData.submitterEmail,
+        from_name: formData.submitterName,
+        resource_name: formData.name,
+        resource_category: formData.category,
+        resource_address: formData.address,
+        resource_phone: formData.phone || 'Not provided',
+        resource_email: formData.email || 'Not provided',
+        resource_website: formData.website || 'Not provided',
+        resource_hours: formData.hours || 'Not provided',
+        resource_description: formData.description,
+        resource_services: formData.services || 'Not provided',
+        resource_tags: formData.tags || 'Not provided',
+        submitter_phone: formData.submitterPhone || 'Not provided',
+        submitter_relation: formData.submitterRelation || 'Not provided'
       })
       .then(response => {
-        console.log('Response status:', response.status);
-        return response.json().catch(() => ({ error: 'Failed to parse response' }));
-      })
-      .then(data => {
-        console.log('API Response:', data);
+        console.log('EmailJS Response:', response);
+        submitBtn.disabled = false;
         
-        if (data.id || data.success) {
+        if (response.status === 200) {
           showStatus('✅ Thank you! Your resource has been submitted successfully. We will review it and add it to the hub within 1-2 business days.', 'success');
           document.getElementById('resourceForm').reset();
-          submitBtn.disabled = false;
           
           setTimeout(() => {
             const statusEl = document.getElementById('statusMessage');
             statusEl.classList.remove('show');
           }, 5000);
-        } else if (data.error || data.message) {
-          showStatus(`❌ Submission Error: ${data.message || data.error}`, 'error');
-          submitBtn.disabled = false;
         } else {
           showStatus('✅ Your submission has been received! We will review it shortly.', 'success');
           document.getElementById('resourceForm').reset();
-          submitBtn.disabled = false;
         }
       })
       .catch(error => {

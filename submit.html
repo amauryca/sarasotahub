@@ -107,32 +107,31 @@
       margin-top: 2rem;
     }
 
-    .btn {
-      padding: 0.75rem 2rem;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
     }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary-color), #f06292);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
-    }
-
-    .btn-secondary {
-      background: var(--border-color);
-      color: var(--text-dark);
-    }
-
-    .btn-secondary:hover {
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <a href="index.html" class="logo-section">
+        <img src="assets/favicon.ico" alt="Sarasota">
+        <span>Sarasota Hub</span>
+      </a>
+      <nav id="main-nav">
+        <a href="index.html" class="nav-link" data-page="home">Home</a>
+        <a href="resources.html" class="nav-link" data-page="resources">Resources</a>
+        <a href="map.html" class="nav-link" data-page="map">Map</a>
+        <a href="calendar.html" class="nav-link" data-page="calendar">Calendar</a>
+        <a href="submit.html" class="nav-link active" data-page="submit">Submit</a>
+        <a href="about.html" class="nav-link" data-page="about">About</a>
+      </nav>
+      <button id="hamburger" class="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
       background: #ddd;
     }
 
@@ -225,7 +224,6 @@
   </header>
 
   <main>
-r = resend.Emails.send({
     <div class="container">
       <div style="margin-top: 2rem; margin-bottom: 2rem;"><h1>Submit a Resource</h1></div>
       <div id="statusMessage" class="status-message"></div>

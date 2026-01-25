@@ -198,26 +198,27 @@
         width: 100%;
       }
     }
-  </style>
-</head>
-<body>
-  <!-- Header -->
   <header>
-    <div class="container">
-      <div class="header-content">
-        <div class="logo">🌴 Sarasota Hub</div>
-        <button id="hamburger" class="hamburger" onclick="toggleMobileMenu()">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <nav id="main-nav" class="nav">
-          <a href="index.html">Home</a>
-          <a href="resources.html">Resources</a>
-          <a href="map.html">Map</a>
-          <a href="calendar.html">Events</a>
-          <a href="submit.html" class="active">Submit</a>
-          <a href="about.html">About</a>
+    <div class="header-content">
+      <a href="index.html" class="logo-section">
+        <img src="assets/favicon.ico" alt="Sarasota">
+        <span>Sarasota Hub</span>
+      </a>
+      <nav id="main-nav">
+        <a href="index.html" class="nav-link" data-page="home">Home</a>
+        <a href="resources.html" class="nav-link" data-page="resources">Resources</a>
+        <a href="map.html" class="nav-link" data-page="map">Map</a>
+        <a href="calendar.html" class="nav-link" data-page="calendar">Calendar</a>
+        <a href="submit.html" class="nav-link active" data-page="submit">Submit</a>
+        <a href="about.html" class="nav-link" data-page="about">About</a>
+      </nav>
+      <button id="hamburger" class="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
         </nav>
       </div>
     </div>
@@ -312,7 +313,7 @@ r = resend.Emails.send({
     const TEMPLATE_ID = 'template_vxbit4w';
     const PUBLIC_KEY = '3u8_LrWUqrh1EgNaW';
     const ADMIN_EMAIL = 'sarasotahub@gmail.com';
-    emailjs.init('3u8_LrWUqrh1EgNaW');
+    emailjs.init(PUBLIC_KEY);
     function showStatus(message, type) {
       const statusEl = document.getElementById('statusMessage');
       statusEl.textContent = message;

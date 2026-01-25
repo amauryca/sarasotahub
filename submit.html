@@ -224,34 +224,57 @@
   </header>
 
   <main>
-    <div class="container">
-      <div style="margin-top: 2rem; margin-bottom: 2rem;">
-        <h1>Submit a Resource</h1>
-        <p style="color: var(--text-light); font-size: 1.05rem;">Help us grow the community hub by submitting a resource you know about.</p>
-      </div>
-
-      <div id="statusMessage" class="status-message"></div>
-
-      <div class="form-container" style="text-align:center; min-height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <h2 style="color:var(--primary-color);margin-bottom:1.5rem;">Submit a Resource</h2>
-        <p style="font-size:1.1rem; color:var(--text-dark); max-width:500px;">To submit a resource, please email us directly at <a href="mailto:sarasotahub@gmail.com" style="color:#e91e63; text-decoration:underline;">sarasotahub@gmail.com</a> with the details. Thank you for helping grow the Sarasota Community Resource Hub!</p>
-        <div style="margin-top:2.5rem;">
-          <h3 style="color:var(--primary-color);font-size:1.1rem;">Want to automate this?</h3>
-          <p style="font-size:0.98rem; color:var(--text-light);">You can use the following Python script to send us a resource via email using the Resend API:</p>
-          <pre style="background:#fce4ec; color:#c2185b; padding:1rem; border-radius:0.5rem; text-align:left; font-size:0.95rem; overflow-x:auto; margin:0 auto; max-width:95vw;">
-import resend
-
-resend.api_key = "re_8Fn58NsH_EcjjVMp32j3VDiPNEC4ZwL5f"
-
 r = resend.Emails.send({
-    "from": "onboarding@resend.dev",
-    "to": "sarasotahub@gmail.com",
-    "subject": "Hello World",
-    "html": "<p>Congrats on sending your <strong>first email</strong>!</p>"
-})
-print(r)
-          </pre>
-        </div>
+    <div class="container">
+      <div style="margin-top: 2rem; margin-bottom: 2rem;"><h1>Submit a Resource</h1></div>
+      <div id="statusMessage" class="status-message"></div>
+      <div class="form-container">
+        <form id="resourceForm" novalidate>
+          <div class="form-group">
+            <label for="resourceName">Resource Name <span class="required">*</span></label>
+            <input type="text" id="resourceName" name="resourceName" required>
+          </div>
+          <div class="form-group">
+            <label for="resourceCategory">Category <span class="required">*</span></label>
+            <select id="resourceCategory" name="resourceCategory" required>
+              <option value="">Select a category</option>
+              <option value="food-assistance">Food Assistance</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="housing">Housing</option>
+              <option value="education">Education</option>
+              <option value="employment">Employment</option>
+              <option value="mental-health">Mental Health</option>
+              <option value="seniors">Seniors</option>
+              <option value="youth">Youth/Families</option>
+              <option value="disability">Disability Services</option>
+              <option value="legal">Legal Services</option>
+              <option value="transportation">Transportation</option>
+              <option value="beaches">Beaches</option>
+              <option value="places-to-go">Places to Go</option>
+              <option value="things-to-do">Things to Do</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="resourceAddress">Address <span class="required">*</span></label>
+            <input type="text" id="resourceAddress" name="resourceAddress" required>
+          </div>
+          <div class="form-group">
+            <label for="resourceDescription">Description <span class="required">*</span></label>
+            <textarea id="resourceDescription" name="resourceDescription" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="submitterName">Your Name <span class="required">*</span></label>
+            <input type="text" id="submitterName" name="submitterName" required>
+          </div>
+          <div class="form-group">
+            <label for="submitterEmail">Your Email <span class="required">*</span></label>
+            <input type="email" id="submitterEmail" name="submitterEmail" required>
+          </div>
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-primary" id="submitBtn">Submit Resource</button>
+          </div>
+        </form>
       </div>
   </main>
 
@@ -283,7 +306,89 @@ print(r)
     </div>
   </footer>
 
-  <!-- No form or JS needed. Email instructions and Python script provided above. -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/build/index.min.js"></script>
+  <script>
+    const SERVICE_ID = 'service_1qniwxh';
+    const TEMPLATE_ID = 'template_l3vfvjj';
+    const PUBLIC_KEY = '3u8_LrWUqrh1EgNaW';
+    const ADMIN_EMAIL = 'sarasotahub@gmail.com';
+    emailjs.init(PUBLIC_KEY);
+    function showStatus(message, type) {
+      const statusEl = document.getElementById('statusMessage');
+      statusEl.textContent = message;
+      statusEl.className = `status-message show ${type}`;
+      statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function clearErrors() {
+      document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('error'));
+    }
+    function validateForm(formData) {
+      clearErrors();
+      let isValid = true;
+      if (!formData.resourceName) {
+        document.getElementById('resourceName').classList.add('error');
+        isValid = false;
+      }
+      if (!formData.resourceCategory) {
+        document.getElementById('resourceCategory').classList.add('error');
+        isValid = false;
+      }
+      if (!formData.resourceAddress) {
+        document.getElementById('resourceAddress').classList.add('error');
+        isValid = false;
+      }
+      if (!formData.resourceDescription) {
+        document.getElementById('resourceDescription').classList.add('error');
+        isValid = false;
+      }
+      if (!formData.submitterName) {
+        document.getElementById('submitterName').classList.add('error');
+        isValid = false;
+      }
+      if (!formData.submitterEmail) {
+        document.getElementById('submitterEmail').classList.add('error');
+        isValid = false;
+      }
+      return isValid;
+    }
+    document.getElementById('resourceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = {
+        resourceName: document.getElementById('resourceName').value.trim(),
+        resourceCategory: document.getElementById('resourceCategory').value.trim(),
+        resourceAddress: document.getElementById('resourceAddress').value.trim(),
+        resourceDescription: document.getElementById('resourceDescription').value.trim(),
+        submitterName: document.getElementById('submitterName').value.trim(),
+        submitterEmail: document.getElementById('submitterEmail').value.trim()
+      };
+      if (!validateForm(formData)) {
+        showStatus('❌ Please fill in all required fields.', 'error');
+        return;
+      }
+      document.getElementById('submitBtn').disabled = true;
+      showStatus('📤 Sending your submission...', 'loading');
+      emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+        to_email: ADMIN_EMAIL,
+        from_name: formData.submitterName,
+        from_email: formData.submitterEmail,
+        resource_name: formData.resourceName,
+        resource_category: formData.resourceCategory,
+        resource_address: formData.resourceAddress,
+        resource_description: formData.resourceDescription
+      })
+      .then(function(response) {
+        showStatus('✅ Thank you! Your resource has been submitted successfully.', 'success');
+        document.getElementById('resourceForm').reset();
+        document.getElementById('submitBtn').disabled = false;
+        setTimeout(() => {
+          document.getElementById('statusMessage').classList.remove('show');
+        }, 5000);
+      }, function(error) {
+        showStatus('❌ Error submitting form. Please try again later.', 'error');
+        document.getElementById('submitBtn').disabled = false;
+      });
+    });
+  </script>
 </body>
 </html>
 

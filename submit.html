@@ -221,9 +221,6 @@
       const TEMPLATE_ID = 'template_vxbit4w';
       const PUBLIC_KEY = '3u8_LrWUqrh1EgNaW';
       const ADMIN_EMAIL = 'sarasotahub@gmail.com';
-      if (typeof emailjs !== 'undefined') {
-        emailjs.init(PUBLIC_KEY);
-      }
       function showStatus(message, type) {
         const statusEl = document.getElementById('statusMessage');
         statusEl.textContent = message;
@@ -278,34 +275,39 @@
         }
         document.getElementById('submitBtn').disabled = true;
         showStatus('📤 Sending your submission...', 'loading');
-        if (typeof emailjs !== 'undefined') {
-          emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-            to_email: ADMIN_EMAIL,
-            from_name: formData.submitterName,
-            from_email: formData.submitterEmail,
-            resource_name: formData.resourceName,
-            resource_category: formData.resourceCategory,
-            resource_address: formData.resourceAddress,
-            resource_description: formData.resourceDescription
-          })
-          .then(function(response) {
-            showStatus('✅ Thank you! Your resource has been submitted successfully.', 'success');
-            document.getElementById('resourceForm').reset();
+          (function(){
+            emailjs.init({
+              publicKey: "3u8_LrWUqrh1EgNaW",
+            });
+          })();
+
+          if (window.emailjs) {
+            emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+              to_email: ADMIN_EMAIL,
+              from_name: formData.submitterName,
+              from_email: formData.submitterEmail,
+              resource_name: formData.resourceName,
+              resource_category: formData.resourceCategory,
+              resource_address: formData.resourceAddress,
+              resource_description: formData.resourceDescription
+            })
+            .then(function(response) {
+              showStatus('✅ Thank you! Your resource has been submitted successfully.', 'success');
+              document.getElementById('resourceForm').reset();
+              document.getElementById('submitBtn').disabled = false;
+              setTimeout(() => {
+                document.getElementById('statusMessage').classList.remove('show');
+              }, 5000);
+            }, function(error) {
+              showStatus('❌ Error submitting form. Please try again later.', 'error');
+              document.getElementById('submitBtn').disabled = false;
+            });
+          } else {
+            showStatus('❌ EmailJS library failed to load. Please try again later.', 'error');
             document.getElementById('submitBtn').disabled = false;
-            setTimeout(() => {
-              document.getElementById('statusMessage').classList.remove('show');
-            }, 5000);
-          }, function(error) {
-            showStatus('❌ Error submitting form. Please try again later.', 'error');
-            document.getElementById('submitBtn').disabled = false;
-          });
-        } else {
-          showStatus('❌ EmailJS library failed to load. Please try again later.', 'error');
-          document.getElementById('submitBtn').disabled = false;
-        }
+          }
       });
     });
   </script>
 </body>
 </html>
-

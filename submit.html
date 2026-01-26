@@ -289,21 +289,39 @@
           document.getElementById('submitBtn').disabled = true;
           showStatus('📤 Sending your submission...', 'loading');
           if (window.emailjs && typeof window.emailjs.send === 'function') {
+            // 1. Send to admin
             emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+              to_email: 'sarasotahub@gmail.com',
               from_name: formData.submitterName,
-              from_email: formData.submitterEmail, // This will be used as the recipient
+              from_email: formData.submitterEmail,
               resource_name: formData.resourceName,
               resource_category: formData.resourceCategory,
               resource_address: formData.resourceAddress,
               resource_description: formData.resourceDescription
             })
             .then(function(response) {
-              showStatus('✅ Thank you! Your resource has been submitted successfully. A confirmation email has been sent.', 'success');
-              document.getElementById('resourceForm').reset();
-              document.getElementById('submitBtn').disabled = false;
-              setTimeout(() => {
-                document.getElementById('statusMessage').classList.remove('show');
-              }, 5000);
+              // 2. Send confirmation to user
+              emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+                to_email: formData.submitterEmail,
+                from_name: 'Sarasota Hub',
+                from_email: 'sarasotahub@gmail.com',
+                resource_name: formData.resourceName,
+                resource_category: formData.resourceCategory,
+                resource_address: formData.resourceAddress,
+                resource_description: formData.resourceDescription
+              })
+              .then(function(response2) {
+                showStatus('✅ Thank you! Your resource has been submitted. Confirmation sent to your email.', 'success');
+                document.getElementById('resourceForm').reset();
+                document.getElementById('submitBtn').disabled = false;
+                setTimeout(() => {
+                  document.getElementById('statusMessage').classList.remove('show');
+                }, 5000);
+              }, function(error2) {
+                showStatus('✅ Resource submitted, but confirmation email failed.', 'error');
+                document.getElementById('resourceForm').reset();
+                document.getElementById('submitBtn').disabled = false;
+              });
             }, function(error) {
               showStatus('❌ Error submitting form. Please try again later.', 'error');
               document.getElementById('submitBtn').disabled = false;

@@ -18,6 +18,7 @@ Resources used:
 * https://www.w3schools.com/html/html_responsive.asp
 * https://www.youtube.com/watch?v=UUjNEMXZA-k
 * https://www.w3schools.com/html/html_emojis.asp
+* https://www.youtube.com/watch?v=O4jV8Zz2w9I
 ----------------------------------
 Explanation for each page:
 ## Index

@@ -106,8 +106,6 @@
       justify-content: center;
       margin-top: 2rem;
     }
-
-    }
   </style>
 </head>
 <body>
@@ -236,6 +234,27 @@
         statusEl.textContent = message;
         statusEl.className = `status-message show ${type}`;
         statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // Change background color of the whole page
+        if (type === 'success') {
+          document.body.style.backgroundColor = '#d4edda'; // green
+        } else if (type === 'error') {
+          document.body.style.backgroundColor = '#f8d7da'; // red
+        } else {
+          document.body.style.backgroundColor = '';
+        }
+        // Add Home button if not already present
+        if (!document.getElementById('homeBtn')) {
+          const homeBtn = document.createElement('button');
+          homeBtn.id = 'homeBtn';
+          homeBtn.textContent = 'Go to Home';
+          homeBtn.className = 'btn btn-primary';
+          homeBtn.style.marginTop = '2rem';
+          homeBtn.onclick = function() {
+            window.location.href = 'index.html';
+          };
+          statusEl.appendChild(document.createElement('br'));
+          statusEl.appendChild(homeBtn);
+        }
       }
       function clearErrors() {
         document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('error'));
@@ -316,19 +335,40 @@
                 document.getElementById('submitBtn').disabled = false;
                 setTimeout(() => {
                   document.getElementById('statusMessage').classList.remove('show');
+                  document.body.style.backgroundColor = '';
+                  const homeBtn = document.getElementById('homeBtn');
+                  if (homeBtn) homeBtn.remove();
                 }, 5000);
               }, function(error2) {
                 showStatus('✅ Resource submitted, but confirmation email failed.', 'error');
                 document.getElementById('resourceForm').reset();
                 document.getElementById('submitBtn').disabled = false;
+                setTimeout(() => {
+                  document.getElementById('statusMessage').classList.remove('show');
+                  document.body.style.backgroundColor = '';
+                  const homeBtn = document.getElementById('homeBtn');
+                  if (homeBtn) homeBtn.remove();
+                }, 5000);
               });
             }, function(error) {
               showStatus('❌ Error submitting form. Please try again later.', 'error');
               document.getElementById('submitBtn').disabled = false;
+              setTimeout(() => {
+                document.getElementById('statusMessage').classList.remove('show');
+                document.body.style.backgroundColor = '';
+                const homeBtn = document.getElementById('homeBtn');
+                if (homeBtn) homeBtn.remove();
+              }, 5000);
             });
           } else {
             showStatus('❌ EmailJS library failed to load. Please try again later.', 'error');
             document.getElementById('submitBtn').disabled = false;
+            setTimeout(() => {
+              document.getElementById('statusMessage').classList.remove('show');
+              document.body.style.backgroundColor = '';
+              const homeBtn = document.getElementById('homeBtn');
+              if (homeBtn) homeBtn.remove();
+            }, 5000);
           }
         });
       }

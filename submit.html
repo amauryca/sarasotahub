@@ -290,7 +290,6 @@
           showStatus('📤 Sending your submission...', 'loading');
           if (window.emailjs && typeof window.emailjs.send === 'function') {
             emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-              to_email: ADMIN_EMAIL,
               from_name: formData.submitterName,
               from_email: formData.submitterEmail,
               resource_name: formData.resourceName,

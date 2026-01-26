@@ -214,13 +214,23 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/build/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const SERVICE_ID = 'service_ymistia';
       const TEMPLATE_ID = 'template_vxbit4w';
       const PUBLIC_KEY = '3u8_LrWUqrh1EgNaW';
       const ADMIN_EMAIL = 'sarasotahub@gmail.com';
+
+      // Initialize EmailJS v4 once DOM and script are ready
+      function initEmailJS() {
+        if (window.emailjs && typeof window.emailjs.init === 'function') {
+          emailjs.init({ publicKey: PUBLIC_KEY });
+          return true;
+        }
+        return false;
+      }
+
       function showStatus(message, type) {
         const statusEl = document.getElementById('statusMessage');
         statusEl.textContent = message;
@@ -259,29 +269,26 @@
         }
         return isValid;
       }
-      document.getElementById('resourceForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = {
-          resourceName: document.getElementById('resourceName').value.trim(),
-          resourceCategory: document.getElementById('resourceCategory').value.trim(),
-          resourceAddress: document.getElementById('resourceAddress').value.trim(),
-          resourceDescription: document.getElementById('resourceDescription').value.trim(),
-          submitterName: document.getElementById('submitterName').value.trim(),
-          submitterEmail: document.getElementById('submitterEmail').value.trim()
-        };
-        if (!validateForm(formData)) {
-          showStatus('❌ Please fill in all required fields.', 'error');
-          return;
-        }
-        document.getElementById('submitBtn').disabled = true;
-        showStatus('📤 Sending your submission...', 'loading');
-          (function(){
-            emailjs.init({
-              publicKey: "3u8_LrWUqrh1EgNaW",
-            });
-          })();
 
-          if (window.emailjs) {
+      // Only bind the form after EmailJS is ready
+      function bindForm() {
+        document.getElementById('resourceForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const formData = {
+            resourceName: document.getElementById('resourceName').value.trim(),
+            resourceCategory: document.getElementById('resourceCategory').value.trim(),
+            resourceAddress: document.getElementById('resourceAddress').value.trim(),
+            resourceDescription: document.getElementById('resourceDescription').value.trim(),
+            submitterName: document.getElementById('submitterName').value.trim(),
+            submitterEmail: document.getElementById('submitterEmail').value.trim()
+          };
+          if (!validateForm(formData)) {
+            showStatus('❌ Please fill in all required fields.', 'error');
+            return;
+          }
+          document.getElementById('submitBtn').disabled = true;
+          showStatus('📤 Sending your submission...', 'loading');
+          if (window.emailjs && typeof window.emailjs.send === 'function') {
             emailjs.send(SERVICE_ID, TEMPLATE_ID, {
               to_email: ADMIN_EMAIL,
               from_name: formData.submitterName,
@@ -306,7 +313,20 @@
             showStatus('❌ EmailJS library failed to load. Please try again later.', 'error');
             document.getElementById('submitBtn').disabled = false;
           }
-      });
+        });
+      }
+
+      // Wait for EmailJS to be available, then init and bind
+      function waitForEmailJS(attempts) {
+        if (initEmailJS()) {
+          bindForm();
+        } else if (attempts > 0) {
+          setTimeout(function() { waitForEmailJS(attempts - 1); }, 100);
+        } else {
+          showStatus('❌ EmailJS library failed to load. Please try again later.', 'error');
+        }
+      }
+      waitForEmailJS(30); // Try for up to 3 seconds
     });
   </script>
 </body>

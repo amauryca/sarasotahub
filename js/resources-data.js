@@ -492,36 +492,8 @@ const resourcesDatabase = [
     hours: "Box office: Mon-Fri: 10am-4pm",
     tags: ["Venue", "Events", "Performance"],
     services: ["Events", "Performances", "Rentals"]
-  }
-];
-
-// Featured resources for home page
-const featuredResources = [
-  resourcesDatabase.find(r => r.id === 1), // Selby Library
-  resourcesDatabase.find(r => r.id === 9), // Siesta Beach
-  resourcesDatabase.find(r => r.id === 4)  // Sarasota Memorial Hospital
-].filter(Boolean);
-
-// Categories for filtering
-const categories = [
-  "All Categories",
-  "Libraries",
-  "Healthcare",
-  "Shelters",
-  "Job Services",
-  "Parks",
-  "Transit",
-  "Food Services",
-  "Youth Services",
-  "Senior Services",
-  "Community Services",
-  "Education",
-  "Legal Services",
-  "Support Services",
-  "Family Services"
-,
-// Newly Added Verified Resources
-  {
+  },
+    {
     id: 35,
     name: "All Faiths Food Bank",
     category: "Food Services",
@@ -1265,3 +1237,29 @@ const categories = [
     services: ["Forms", "Notary", "Guidance"]
   }
 ];
+
+// Featured resources for home page
+const featuredResources = [
+  resourcesDatabase.find(r => r.id === 1), // Selby Library
+  resourcesDatabase.find(r => r.id === 9), // Siesta Beach
+  resourcesDatabase.find(r => r.id === 4)  // Sarasota Memorial Hospital
+].filter(Boolean);
+
+// Categories for filtering
+const categories = [
+  "All Categories",
+  "Libraries",
+  "Healthcare",
+  "Shelters",
+  "Job Services",
+  "Parks",
+  "Transit",
+  "Food Services",
+  "Youth Services",
+  "Senior Services",
+  "Community Services",
+  "Education",
+  "Legal Services",
+  "Support Services",
+  "Family Services"
+,

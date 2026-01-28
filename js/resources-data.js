@@ -493,7 +493,7 @@ const resourcesDatabase = [
     tags: ["Venue", "Events", "Performance"],
     services: ["Events", "Performances", "Rentals"]
   },
-    {
+  {
     id: 35,
     name: "All Faiths Food Bank",
     category: "Food Services",
@@ -772,8 +772,7 @@ const resourcesDatabase = [
     hours: "Wed-Sun: 12pm-4pm",
     tags: ["Sanctuary", "Animals", "Conservation"],
     services: ["Animal Encounters", "Shows", "Education"]
-  }
-,
+  },
   {
     id: 55,
     name: "Gulf Gate Public Library",
@@ -1262,4 +1261,4 @@ const categories = [
   "Legal Services",
   "Support Services",
   "Family Services"
-,
+];

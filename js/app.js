@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeApp() {
+  updateNavigation();
   setupMobileMenu();
   detectCurrentPage();
   setupEventListeners();
@@ -20,6 +21,25 @@ function initializeApp() {
   setupScrollAnimations();
   initializePageSpecific();
   console.log('App initialized for page:', currentPage);
+}
+
+function updateNavigation() {
+  const nav = document.getElementById('main-nav');
+  if (nav && !nav.querySelector('a[data-page="documents"]')) {
+    const docLink = document.createElement('a');
+    docLink.href = 'documents.html';
+    docLink.className = 'nav-link';
+    docLink.setAttribute('data-page', 'documents');
+    docLink.textContent = 'Documents';
+    
+    // Insert before About page if it exists
+    const aboutLink = nav.querySelector('a[data-page="about"]');
+    if (aboutLink) {
+      nav.insertBefore(docLink, aboutLink);
+    } else {
+      nav.appendChild(docLink);
+    }
+  }
 }
 
 function initializePageSpecific() {
@@ -49,6 +69,8 @@ function detectCurrentPage() {
     currentPage = 'submit';
   } else if (path.includes('about.html')) {
     currentPage = 'about';
+  } else if (path.includes('documents.html')) {
+    currentPage = 'documents';
   } else {
     currentPage = 'home';
   }

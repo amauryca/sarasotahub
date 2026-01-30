@@ -1045,7 +1045,7 @@ footer::before {
   }
 
   nav.active {
-    max-height: 300px;
+    max-height: 500px;
   }
 
   nav a {
